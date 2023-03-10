@@ -8,6 +8,7 @@ import pacman.game.Game;
 
 import java.util.*;
 
+
 /*
  * This is the class you need to modify for your entry. In particular, you need to
  * fill in the getAction() method. Any additional classes you write should either
@@ -18,7 +19,7 @@ public class MyPacMan extends Controller<MOVE>
 	private MOVE myMove=MOVE.NEUTRAL;
 	private ArrayList<DataTuple> savedData, dataSetTraining, dataSetTest;
 	private HashMap<String, ArrayList<String>> attributeMap;
-
+	private int maximumDistance = 150;
 	public MyPacMan(){
 		savedData = new ArrayList<>(List.of(DataSaverLoader.LoadPacManData()));
 		createDataSets();
@@ -92,7 +93,69 @@ public class MyPacMan extends Controller<MOVE>
 		// Supposedly ID3 algo goes here
 		String s = attributeSelection(dataSetTraining, attributeList);
 
+		// matrix representation of the data set containing 9 columns,
+		// 1 for each attribute [0-8] where [8] is target class
+		String[][] dataset = generateDataSet();
+
+
 		return null;
+	}
+	public static String[][] generateDataSet(){
+		DataTuple[] arr = DataSaverLoader.LoadPacManData();
+		String[][] preProcessed = new String[arr.length][9];
+		for (int i = 0; i < arr.length; i++) {
+			String[] processed = new String[9];
+			processed[0] = arr[i].discretizeDistance(arr[i].blinkyDist).toString();
+			processed[1] = arr[i].blinkyDir.toString();
+			processed[2] = arr[i].discretizeDistance(arr[i].inkyDist).toString();
+			processed[3] = arr[i].inkyDir.toString();
+			processed[4] = arr[i].discretizeDistance(arr[i].pinkyDist).toString();
+			processed[5] = arr[i].pinkyDir.toString();
+			processed[6] = arr[i].discretizeDistance(arr[i].sueDist).toString();
+			processed[7] = arr[i].sueDir.toString();
+			processed[8] = arr[i].DirectionChosen.toString();
+			preProcessed[i] = processed;
+		}
+		for (int i = 0; i <= 25 ; i++) {
+			System.out.println(preProcessed[i][0] + " " + preProcessed[i][1] + " " + preProcessed[i][2] + " " + preProcessed[i][3] + " " + preProcessed[i][4] + " " + preProcessed[i][5] + " " + preProcessed[i][6] + " " + preProcessed[i][7] + " " + preProcessed[i][8]);
+		}
+		return preProcessed;
+	}
+
+	/**
+	 * calculate entropy for the data set
+	 * wip - boilerplate works.
+	 * todo add input parameter
+	 * todo calculate entropy for each of the target classes in data set
+	 * // Entropy(S) = - ∑ pᵢ * log₂(pᵢ) ; i = 4 (UP,DOWN,LEFT,RIGHT)
+	 * @return
+	 */
+	public static double calculateEntropy(){
+		String[][] dataset = generateDataSet();
+		// 26 entries
+		// 8 attributes = 4 ghosts * 2 (edible, distance)
+		// 4 classes = up, down, left, right
+		double entropy = 0;
+		double left = 8;
+		double total = 14;
+		double down = 6;
+		entropy = -(left/total) * log2(left/total) - ((down/total) * log2(down/total));
+		return entropy;
+	}
+
+	/**
+	 * calculate log2 N indirectly
+	 * using log() method
+	 * abstraction layer for readability
+	 * @param N - number to calculate log2 of
+	 * @return log2 N
+	 */
+	public static double log2(double N)
+	{
+		// calculate log2 N indirectly
+		// using log() method
+		double result = (Math.log(N) / Math.log(2));
+		return result;
 	}
 
 	public boolean checkSameClass() {
@@ -121,5 +184,11 @@ public class MyPacMan extends Controller<MOVE>
 
 	public String attributeSelection(ArrayList<DataTuple> dataSetTraining, ArrayList<String> attributesList) {
 		return null;
+	}
+
+	public static void main(String[] args) {
+		MyPacMan myPacMan = new MyPacMan();
+		generateDataSet();
+		System.out.println(calculateEntropy());
 	}
 }
