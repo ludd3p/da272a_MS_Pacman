@@ -1,4 +1,4 @@
-package pacman.entries.pacman;
+eepackage pacman.entries.pacman;
 
 import dataRecording.DataSaverLoader;
 import dataRecording.DataTuple;
@@ -135,6 +135,7 @@ public class MyPacMan extends Controller<MOVE>
 		// 26 entries
 		// 8 attributes = 4 ghosts * 2 (edible, distance)
 		// 4 classes = up, down, left, right
+		// left = 25, down = 25, total = 50 --> Entropy = 1.0, verified working. 
 		double entropy = 0;
 		double left = 8;
 		double total = 14;
