@@ -8,6 +8,8 @@ import pacman.game.Game;
 
 import java.util.*;
 
+import static pacman.game.Constants.MOVE.*;
+
 
 /*
  * This is the class you need to modify for your entry. In particular, you need to
@@ -125,22 +127,51 @@ public class MyPacMan extends Controller<MOVE>
 	/**
 	 * calculate entropy for the data set
 	 * wip - boilerplate works.
-	 * todo add input parameter
-	 * todo calculate entropy for each of the target classes in data set
 	 * // Entropy(S) = - ∑ pᵢ * log₂(pᵢ) ; i = 4 (UP,DOWN,LEFT,RIGHT)
 	 * @return
 	 */
-	public static double calculateEntropy(){
+	public static double calculateEntropy(Enum<MOVE> targetClass){
 		String[][] dataset = generateDataSet();
-		// 26 entries
-		// 8 attributes = 4 ghosts * 2 (edible, distance)
-		// 4 classes = up, down, left, right
-		double entropy = 0;
-		double left = 8;
-		double total = 14;
-		double down = 6;
-		entropy = -(left/total) * log2(left/total) - ((down/total) * log2(down/total));
-		return entropy;
+		double total = dataset.length;
+		double upCount = 0, downcount = 0, leftCount = 0, rightCount = 0, neutralCount = 0;
+
+		// count the number of each target class
+		for (String[] row : dataset){
+			String targetClassStr = row[8];
+			switch (targetClassStr){
+				case "UP" -> upCount++;
+				case "DOWN" -> downcount++;
+				case "LEFT" -> leftCount++;
+				case "RIGHT" -> rightCount++;
+				case "NEUTRAL" -> neutralCount++;
+			}
+		}
+		System.out.println("TOTAL: " + dataset.length +
+				"\n	UP: " + upCount +
+				"\n	DOWN: " + downcount +
+				"\n	LEFT: " + leftCount +
+				"\n	RIGHT: " + rightCount +
+				"\n	NEUTRAL: " + neutralCount);
+
+		// calculate entropy for given targetClass (parameter) and return it
+		if (targetClass.equals(UP)) {
+			return -(upCount / total) * log2(upCount / total) - ((total - upCount) / total) * log2((total - upCount) / total);
+		}
+		else if (targetClass.equals(DOWN)) {
+			return -(downcount / total) * log2(downcount / total) - ((total - downcount) / total) * log2((total - downcount) / total);
+		}
+		else if (targetClass.equals(LEFT)) {
+			return -(leftCount / total) * log2(leftCount / total) - ((total - leftCount) / total) * log2((total - leftCount) / total);
+		}
+		else if (targetClass.equals(RIGHT)) {
+			return -(rightCount / total) * log2(rightCount / total) - ((total - rightCount) / total) * log2((total - rightCount) / total);
+		}
+		else if (targetClass.equals(NEUTRAL)) {
+			return -(neutralCount / total) * log2(neutralCount / total) - ((total - neutralCount) / total) * log2((total - neutralCount) / total);
+		}
+		else {
+			return -1;
+		}
 	}
 
 	/**
@@ -168,7 +199,7 @@ public class MyPacMan extends Controller<MOVE>
 
 	public MOVE majorityClass(ArrayList<DataTuple> tuples) {
 		MOVE move = null;
-		HashMap<MOVE, Integer> moveCounter = new HashMap<>(Map.of(MOVE.UP, 0, MOVE.LEFT, 0, MOVE.RIGHT, 0, MOVE.DOWN, 0, MOVE.NEUTRAL, 0));
+		HashMap<MOVE, Integer> moveCounter = new HashMap<>(Map.of(UP, 0, LEFT, 0, MOVE.RIGHT, 0, DOWN, 0, MOVE.NEUTRAL, 0));
 		for (DataTuple dt : tuples) {
 			MOVE key = dt.DirectionChosen;
 			moveCounter.put(key, (moveCounter.get(key)+1));
@@ -189,6 +220,6 @@ public class MyPacMan extends Controller<MOVE>
 	public static void main(String[] args) {
 		MyPacMan myPacMan = new MyPacMan();
 		generateDataSet();
-		System.out.println(calculateEntropy());
+		System.out.println(calculateEntropy(UP));
 	}
 }
