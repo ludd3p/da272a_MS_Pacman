@@ -5,7 +5,6 @@ import dataRecording.DataTuple;
 import pacman.controllers.Controller;
 import pacman.game.Constants.MOVE;
 import pacman.game.Game;
-
 import java.util.*;
 
 /*
@@ -18,24 +17,44 @@ public class MyPacMan extends Controller<MOVE>
 	private MOVE myMove=MOVE.NEUTRAL;
 	private ArrayList<DataTuple> savedData, dataSetTraining, dataSetTest;
 	private HashMap<String, ArrayList<String>> attributeMap;
+	private Node root;
 
 	public MyPacMan(){
+		// Get saved data from file
 		savedData = new ArrayList<>(List.of(DataSaverLoader.LoadPacManData()));
+		// Initiate attributes
+		initAttributes();
+		// Create test and training data sets
 		createDataSets();
+		// Start the process of building tree
+		ArrayList<String> attributelist = new ArrayList<>(attributeMap.keySet());
+		root = buildTree(dataSetTraining, attributelist);
 	}
 
+	/**
+	 * Called to calculate move
+	 * @param game A copy of the current game
+	 * @param timeDue The time the next move is due
+	 * @return
+	 */
 	public MOVE getMove(Game game, long timeDue)
 	{
 		//Place your game logic here to play the game as Ms Pac-Man
-		
+		myMove = findMove(root, new DataTuple(game, null));
 		return myMove;
 	}
 
+	/**
+	 * Splits the sata into sets for training and testing.
+	 * Picks random entries for the training set and the rest is left for testing.
+	 * Uses pre-defined split 80/20 for the sets
+	 */
 	private void createDataSets() {
 		Random rnd = new Random();
 		int nbrOfDataSetsTraining = (int)(savedData.size() * 0.8);
 		dataSetTest = new ArrayList<>();
 		dataSetTraining = new ArrayList<>();
+
 
 		for (int i = 0; i < nbrOfDataSetsTraining; i++) {
 			int randomSample = rnd.nextInt(savedData.size());
@@ -44,10 +63,14 @@ public class MyPacMan extends Controller<MOVE>
 		dataSetTest.addAll(savedData);
 	}
 
+	/**
+	 * Creates lists of attributes and adds them to hashmap
+	 */
 	private void initAttributes() {
+		attributeMap = new HashMap<>();
 		ArrayList<String> edible = new ArrayList<>();
-		edible.add("YES");
-		edible.add("NO");
+		edible.add("true");
+		edible.add("false");
 		attributeMap.put("blinkyEdible",edible);
 		attributeMap.put("pinkyEdible",edible);
 		attributeMap.put("sueEdible",edible);
@@ -75,38 +98,82 @@ public class MyPacMan extends Controller<MOVE>
 		attributeMap.put("sueDir", direction);
 	}
 
+	/**
+	 * Creates the tree
+	 * @param dataSetTraining Data set for training
+	 * @param attributeList List of different attributes
+	 * @return The root node
+	 */
 	public Node buildTree(ArrayList<DataTuple> dataSetTraining, ArrayList<String> attributeList) {
 		// Create Node N
 		Node n = new Node();
-		MOVE move = savedData.get(0).DirectionChosen;
+		MOVE move = dataSetTraining.get(0).DirectionChosen;
+
 		// Check if there is only one class represented
-		if (!checkSameClass()) {
+		if (checkSameClass(dataSetTraining)) {
 			n.setLabel(move.toString());
 			return n;
 		}
+
 		// If attribute list is empty
 		if (attributeList.isEmpty()) {
-			n.setLabel(majorityClass(savedData).toString());
+			n.setLabel(majorityClass(dataSetTraining).toString());
 			return n;
 		}
-		// Supposedly ID3 algo goes here
+		// Call the attribute selection method on D and the attribute list, in order to choose the current attribute A:
 		String s = attributeSelection(dataSetTraining, attributeList);
+		// Label N as A and remove A from the attribute list.
+		n.setLabel(s);
+		attributeList.remove(s);
 
-		return null;
+		// For each value in subset of A
+		// Separate all tuples in D so that attribute A takes the value aj, creating the subset Dj
+		ArrayList<String> valuesInA = attributeMap.get(s);
+		for (String valueOfA : valuesInA) {
+			ArrayList<DataTuple> TS = new ArrayList<>();
+			for (DataTuple dt : dataSetTraining) {
+				if (dt.getAttributeValue(s).equals(valueOfA)) {
+					TS.add(dt);
+				}
+			}
+			// If Dj is empty, add a child node to N labeled with the majority class in D
+			if (TS.isEmpty()) {
+				n.addChild(valueOfA, new Node(majorityClass(dataSetTraining).toString()));
+			}
+			// Otherwise, add the resulting node from calling generateTree(Dj,attribute) as a child node to N.
+			else {
+				ArrayList<String> copy = (ArrayList<String>) attributeList.clone();
+				n.addChild(valueOfA, buildTree(TS, (ArrayList<String>) attributeList.clone()));
+
+			}
+		}
+		// Return N
+		return n;
+
 	}
 
-	public boolean checkSameClass() {
+	/**
+	 * Checks if all entries are the same
+	 * @param dataSetTraining The data set
+	 * @return True / False
+	 */
+	public boolean checkSameClass(ArrayList<DataTuple> dataSetTraining) {
 		MOVE move = savedData.get(0).DirectionChosen;
-		for (DataTuple dt : savedData) {
+		for (DataTuple dt : dataSetTraining) {
 			if (dt.DirectionChosen != move) return false;
 		}
 		return true;
 	}
 
-	public MOVE majorityClass(ArrayList<DataTuple> tuples) {
+	/**
+	 * Checks for the dominant attribute in a  data set
+	 * @param dataSetTraining The data set
+	 * @return Most common attribute
+	 */
+	public MOVE majorityClass(ArrayList<DataTuple> dataSetTraining) {
 		MOVE move = null;
 		HashMap<MOVE, Integer> moveCounter = new HashMap<>(Map.of(MOVE.UP, 0, MOVE.LEFT, 0, MOVE.RIGHT, 0, MOVE.DOWN, 0, MOVE.NEUTRAL, 0));
-		for (DataTuple dt : tuples) {
+		for (DataTuple dt : dataSetTraining) {
 			MOVE key = dt.DirectionChosen;
 			moveCounter.put(key, (moveCounter.get(key)+1));
 		}
@@ -120,6 +187,77 @@ public class MyPacMan extends Controller<MOVE>
 	}
 
 	public String attributeSelection(ArrayList<DataTuple> dataSetTraining, ArrayList<String> attributesList) {
-		return null;
+		String returnAttribute = "";
+		double baseValue = Integer.MAX_VALUE;
+
+		// Iterate attributes
+		for (String attribute : attributesList) {
+			double compareValue = 0.0;
+			ArrayList<String> attributeValues = attributeMap.get(attribute);
+
+			//Create HashMap to keep count of
+			HashMap<String, Integer> valueMap = new HashMap<>();
+
+			// Iterate values
+			for (String aValue : attributeValues) {
+				ArrayList<DataTuple> subSet = new ArrayList<>();
+				valueMap.put(aValue, 0);
+
+				//
+				for (DataTuple dt : dataSetTraining) {
+					if (Objects.equals(dt.getAttributeValue(attribute), aValue)) {
+						valueMap.put(aValue, valueMap.get(aValue) +1 );
+						subSet.add(dt);
+					}
+				}
+
+				int up = 0, down = 0, left = 0, right = 0, neutral = 0;
+				for (DataTuple dt : subSet) {
+					switch (dt.DirectionChosen) {
+						case UP -> up++;
+						case DOWN -> down++;
+						case LEFT -> left++;
+						case RIGHT -> right++;
+						case NEUTRAL -> neutral++;
+					}
+				}
+
+				double valueMoveCount = valueMap.get(aValue);
+				if (valueMoveCount != 0) {
+					double AValueOccurrences = (valueMoveCount / dataSetTraining.size());
+					double valueUp = (up / valueMoveCount) * (log2Calculator(up) / valueMoveCount);
+					double valueDown = (down / valueMoveCount) * (log2Calculator(down) / valueMoveCount);
+					double valueLeft = (left / valueMoveCount) * (log2Calculator(left) / valueMoveCount);
+					double valueRight = (right / valueMoveCount) * (log2Calculator(right) / valueMoveCount);
+					double valueNeutral = (neutral / valueMoveCount) * (log2Calculator(neutral) / valueMoveCount);
+					compareValue += AValueOccurrences * (- valueUp - valueDown - valueLeft - valueRight - valueNeutral);
+				}
+			}
+			if (compareValue < baseValue) {
+				baseValue = compareValue;
+				returnAttribute = attribute;
+			}
+		}
+		return returnAttribute;
 	}
+
+	public MOVE findMove(Node node, DataTuple dt) {
+		MOVE move;
+		// Return move if leaf
+		if (node.isLeaf()) return MOVE.valueOf(node.getLabel());
+		else {
+			String att = dt.getAttributeValue(node.getLabel());
+			HashMap<String, Node> children = node.getChildren();
+			Node child = children.get(att);
+			move = findMove(child, dt);
+		}
+		return move;
+	}
+
+	public static double log2Calculator(double d) {
+		if (d <= 0) return 0;
+		return Math.log(d) / Math.log(2);
+	}
+
 }
+
