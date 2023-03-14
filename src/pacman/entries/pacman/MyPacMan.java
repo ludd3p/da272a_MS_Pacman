@@ -98,8 +98,6 @@ public class MyPacMan extends Controller<MOVE>
 		// matrix representation of the data set containing 9 columns,
 		// 1 for each attribute [0-8] where [8] is target class
 		String[][] dataset = generateDataSet();
-
-
 		return null;
 	}
 	public static String[][] generateDataSet(){
@@ -132,6 +130,7 @@ public class MyPacMan extends Controller<MOVE>
 	 */
 	public static double calculateEntropy(Enum<MOVE> targetClass){
 		String[][] dataset = generateDataSet();
+
 		double total = dataset.length;
 		double upCount = 0, downcount = 0, leftCount = 0, rightCount = 0, neutralCount = 0;
 
