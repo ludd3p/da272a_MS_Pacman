@@ -159,10 +159,10 @@ public class DataTuple {
 		stringbuilder.append(this.inkyDist + ";");
 		stringbuilder.append(this.pinkyDist + ";");
 		stringbuilder.append(this.sueDist + ";");
-		stringbuilder.append(this.blinkyDir + ";");
-		stringbuilder.append(this.inkyDir + ";");
-		stringbuilder.append(this.pinkyDir + ";");
-		stringbuilder.append(this.sueDir + ";");
+		stringbuilder.append(this.blinkyDir + ";"); //  x
+		stringbuilder.append(this.inkyDir + ";"); // x
+		stringbuilder.append(this.pinkyDir + ";"); // x
+		stringbuilder.append(this.sueDir + ";"); // x
 		stringbuilder.append(this.numberOfNodesInLevel + ";");
 		stringbuilder.append(this.numberOfTotalPillsInLevel + ";");
 		stringbuilder.append(this.numberOfTotalPowerPillsInLevel + ";");
