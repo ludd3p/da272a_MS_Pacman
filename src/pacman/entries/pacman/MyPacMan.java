@@ -153,24 +153,11 @@ public class MyPacMan extends Controller<MOVE>
 				"\n	NEUTRAL: " + neutralCount);
 
 		// calculate entropy for given targetClass (parameter) and return it
-		if (targetClass.equals(UP)) {
-			return -(upCount / total) * log2(upCount / total) - ((total - upCount) / total) * log2((total - upCount) / total);
-		}
-		else if (targetClass.equals(DOWN)) {
-			return -(downcount / total) * log2(downcount / total) - ((total - downcount) / total) * log2((total - downcount) / total);
-		}
-		else if (targetClass.equals(LEFT)) {
-			return -(leftCount / total) * log2(leftCount / total) - ((total - leftCount) / total) * log2((total - leftCount) / total);
-		}
-		else if (targetClass.equals(RIGHT)) {
-			return -(rightCount / total) * log2(rightCount / total) - ((total - rightCount) / total) * log2((total - rightCount) / total);
-		}
-		else if (targetClass.equals(NEUTRAL)) {
-			return -(neutralCount / total) * log2(neutralCount / total) - ((total - neutralCount) / total) * log2((total - neutralCount) / total);
-		}
-		else {
-			return -1;
-		}
+		return -(upCount / total) * log2(upCount / total) -
+				(downcount / total) * log2(downcount / total) -
+				(leftCount / total) * log2(leftCount / total) -
+				(rightCount / total) * log2(rightCount / total) -
+				(neutralCount / total) * log2(neutralCount / total);
 	}
 
 	/**
@@ -219,6 +206,6 @@ public class MyPacMan extends Controller<MOVE>
 	public static void main(String[] args) {
 		MyPacMan myPacMan = new MyPacMan();
 		generateDataSet();
-		System.out.println(calculateEntropy(UP));
+		System.out.println("ENTROPY = " + calculateEntropy(UP));
 	}
 }
