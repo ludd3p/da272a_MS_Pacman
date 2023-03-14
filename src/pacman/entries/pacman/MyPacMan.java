@@ -107,6 +107,7 @@ public class MyPacMan extends Controller<MOVE>
 	public Node buildTree(ArrayList<DataTuple> dataSetTraining, ArrayList<String> attributeList) {
 		// Create Node N
 		Node n = new Node();
+		// Get first
 		MOVE move = dataSetTraining.get(0).DirectionChosen;
 
 		// Check if there is only one class represented
@@ -142,7 +143,6 @@ public class MyPacMan extends Controller<MOVE>
 			}
 			// Otherwise, add the resulting node from calling generateTree(Dj,attribute) as a child node to N.
 			else {
-				ArrayList<String> copy = (ArrayList<String>) attributeList.clone();
 				n.addChild(valueOfA, buildTree(TS, (ArrayList<String>) attributeList.clone()));
 
 			}
