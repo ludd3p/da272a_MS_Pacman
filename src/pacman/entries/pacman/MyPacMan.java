@@ -29,39 +29,10 @@ public class MyPacMan extends Controller<MOVE>
 		// Start the process of building tree
 		ArrayList<String> attributelist = new ArrayList<>(attributeMap.keySet());
 		root = buildTree(dataSetTraining, attributelist);
+		validateTree(dataSetTraining, "Training");
+		validateTree(dataSetTest, "Testing");
 	}
 
-	/**
-	 * Called to calculate move
-	 * @param game A copy of the current game
-	 * @param timeDue The time the next move is due
-	 * @return
-	 */
-	public MOVE getMove(Game game, long timeDue)
-	{
-		//Place your game logic here to play the game as Ms Pac-Man
-		myMove = findMove(root, new DataTuple(game, null));
-		return myMove;
-	}
-
-	/**
-	 * Splits the sata into sets for training and testing.
-	 * Picks random entries for the training set and the rest is left for testing.
-	 * Uses pre-defined split 80/20 for the sets
-	 */
-	private void createDataSets() {
-		Random rnd = new Random();
-		int nbrOfDataSetsTraining = (int)(savedData.size() * 0.8);
-		dataSetTest = new ArrayList<>();
-		dataSetTraining = new ArrayList<>();
-
-
-		for (int i = 0; i < nbrOfDataSetsTraining; i++) {
-			int randomSample = rnd.nextInt(savedData.size());
-			dataSetTraining.add(savedData.remove(randomSample));
-		}
-		dataSetTest.addAll(savedData);
-	}
 
 	/**
 	 * Creates lists of attributes and adds them to hashmap
@@ -97,6 +68,27 @@ public class MyPacMan extends Controller<MOVE>
 		attributeMap.put("blinkyDir", direction);
 		attributeMap.put("sueDir", direction);
 	}
+
+	/**
+	 * Splits the sata into sets for training and testing.
+	 * Picks random entries for the training set and the rest is left for testing.
+	 * Uses pre-defined split 80/20 for the sets
+	 */
+	private void createDataSets() {
+		Random rnd = new Random();
+		int nbrOfDataSetsTraining = (int)(savedData.size() * 0.8);
+		dataSetTest = new ArrayList<>();
+		dataSetTraining = new ArrayList<>();
+
+
+		for (int i = 0; i < nbrOfDataSetsTraining; i++) {
+			int randomSample = rnd.nextInt(savedData.size());
+			dataSetTraining.add(savedData.remove(randomSample));
+		}
+		dataSetTest.addAll(savedData);
+	}
+
+
 
 	/**
 	 * Creates the tree
@@ -151,6 +143,7 @@ public class MyPacMan extends Controller<MOVE>
 		return n;
 
 	}
+
 
 	/**
 	 * Checks if all entries are the same
@@ -211,6 +204,7 @@ public class MyPacMan extends Controller<MOVE>
 					}
 				}
 
+				// Create sum of each move
 				int up = 0, down = 0, left = 0, right = 0, neutral = 0;
 				for (DataTuple dt : subSet) {
 					switch (dt.DirectionChosen) {
@@ -221,24 +215,50 @@ public class MyPacMan extends Controller<MOVE>
 						case NEUTRAL -> neutral++;
 					}
 				}
-
-				double valueMoveCount = valueMap.get(aValue);
-				if (valueMoveCount != 0) {
-					double AValueOccurrences = (valueMoveCount / dataSetTraining.size());
-					double valueUp = (up / valueMoveCount) * (log2Calculator(up) / valueMoveCount);
-					double valueDown = (down / valueMoveCount) * (log2Calculator(down) / valueMoveCount);
-					double valueLeft = (left / valueMoveCount) * (log2Calculator(left) / valueMoveCount);
-					double valueRight = (right / valueMoveCount) * (log2Calculator(right) / valueMoveCount);
-					double valueNeutral = (neutral / valueMoveCount) * (log2Calculator(neutral) / valueMoveCount);
-					compareValue += AValueOccurrences * (- valueUp - valueDown - valueLeft - valueRight - valueNeutral);
+				HashMap<String, Integer> counts = new HashMap<>(Map.of("up", up, "down", down, "left", left, "right", right, "neutral", neutral));
+				for (int i : counts.values()) {
+					if (i == 0) continue; // 0 in log gives NaN
+					compareValue -= i * Math.log(i) / Math.log(2);
 				}
 			}
+			// Select the best move
 			if (compareValue < baseValue) {
 				baseValue = compareValue;
 				returnAttribute = attribute;
 			}
 		}
 		return returnAttribute;
+	}
+
+	public static double log2Calculator(double d) {
+		if (d <= 0) return 0;
+		return Math.log(d) / Math.log(2);
+	}
+
+	public void validateTree(ArrayList<DataTuple> dataSet, String s){
+		MOVE should, generated;
+		double correct = 0;
+		for (DataTuple dataTuple : dataSet) {
+			should = dataTuple.DirectionChosen;
+			generated = findMove(root, dataTuple);
+			if (should.toString().equals(generated.toString())) {
+				correct++;
+			}
+		}
+		System.out.println(s + " accuracy: " + (correct / dataSet.size()));
+	}
+
+	/**
+	 * Called to calculate move
+	 * @param game A copy of the current game
+	 * @param timeDue The time the next move is due
+	 * @return
+	 */
+	public MOVE getMove(Game game, long timeDue)
+	{
+		//Place your game logic here to play the game as Ms Pac-Man
+		myMove = findMove(root, new DataTuple(game, null));
+		return myMove;
 	}
 
 	public MOVE findMove(Node node, DataTuple dt) {
@@ -253,11 +273,5 @@ public class MyPacMan extends Controller<MOVE>
 		}
 		return move;
 	}
-
-	public static double log2Calculator(double d) {
-		if (d <= 0) return 0;
-		return Math.log(d) / Math.log(2);
-	}
-
 }
 

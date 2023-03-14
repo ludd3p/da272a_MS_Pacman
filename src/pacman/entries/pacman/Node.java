@@ -36,4 +36,6 @@ public class Node {
     public void setLabel(String label) {
         this.label = label;
     }
+
+
 }

@@ -5,9 +5,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/myData/trainingData.txt" beforeDir="false" afterPath="$PROJECT_DIR$/myData/trainingData.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/da272a_MS_Pacman/dataRecording/DataTuple.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/da272a_MS_Pacman/dataRecording/DataTuple.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/da272a_MS_Pacman/pacman/Executor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/da272a_MS_Pacman/pacman/Executor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/da272a_MS_Pacman/pacman/entries/pacman/MyPacMan$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/da272a_MS_Pacman/pacman/entries/pacman/MyPacMan$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/da272a_MS_Pacman/pacman/entries/pacman/MyPacMan.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/da272a_MS_Pacman/pacman/entries/pacman/MyPacMan.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dataRecording/DataTuple.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataRecording/DataTuple.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pacman/Executor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pacman/Executor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pacman/entries/pacman/MyPacMan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pacman/entries/pacman/MyPacMan.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pacman/entries/pacman/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pacman/entries/pacman/Node.java" afterDir="false" />
