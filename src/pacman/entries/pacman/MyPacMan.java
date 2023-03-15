@@ -22,6 +22,7 @@ public class MyPacMan extends Controller<MOVE>
 	public MyPacMan(){
 		// Get saved data from file
 		savedData = new ArrayList<>(List.of(DataSaverLoader.LoadPacManData()));
+		System.out.println(calculateEntropy(savedData));
 		// Initiate attributes
 		initAttributes();
 		// Create test and training data sets
@@ -29,7 +30,7 @@ public class MyPacMan extends Controller<MOVE>
 		// Start the process of building tree
 		ArrayList<String> attributelist = new ArrayList<>(attributeMap.keySet());
 		root = buildTree(dataSetTraining, attributelist);
-		root.printTree(0, root);
+		//root.printTree(0, root);
 		validateTree(dataSetTraining, "Training");
 		validateTree(dataSetTest, "Testing");
 
@@ -193,7 +194,6 @@ public class MyPacMan extends Controller<MOVE>
 
 		// Calculate the entropy of the original dataset
 		double entropy = calculateEntropy(dataSetTraining);
-		System.out.println(entropy + " Entropy full set");
 
 		// Iterate attributes
 		for (String attribute : attributesList) {
@@ -245,7 +245,7 @@ public class MyPacMan extends Controller<MOVE>
 	 */
 	public double calculateEntropy(ArrayList<DataTuple> dataSet){
 		// Create sum of each move
-		int up = 0, down = 0, left = 0, right = 0, neutral = 0;
+		double up = 0, down = 0, left = 0, right = 0, neutral = 0;
 		for (DataTuple dt : dataSet) {
 			switch (dt.DirectionChosen) {
 				case UP -> up++;
@@ -256,11 +256,13 @@ public class MyPacMan extends Controller<MOVE>
 			}
 		}
 		// Put values in ArrayList to be iterable
-		ArrayList<Integer> counts = new ArrayList<>(Arrays.asList(up, down, left, right, neutral));
+		ArrayList<Double> counts = new ArrayList<>(Arrays.asList(up, down, left, right, neutral));
+		double total = up + down + left + right + neutral;
 		double entropy = 0.0;
-		for (int i : counts) {
+		for (double i : counts) {
 			if (i == 0) continue; // 0 in log gives NaN
-			entropy -= i * Math.log(i) / Math.log(2);
+			double d = i / total;
+			entropy -= d * Math.log(d) / Math.log(2);
 		}
 		return entropy;
 	}
