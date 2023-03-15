@@ -37,5 +37,23 @@ public class Node {
         this.label = label;
     }
 
+    public void printTree(int depth, Node node) {
+        if (isLeaf()) {
+            return;
+        }
+
+        // Print the label of the current node
+        for (int i = 0; i < depth; i++) {
+            System.out.print(" " + i + " ");
+        }
+        System.out.println(node.getLabel());
+
+        // Recursively print each child of the current node
+        HashMap<String, Node> childrenNodes = node.getChildren();
+        for (String attribute : childrenNodes.keySet()) {
+            Node child = childrenNodes.get(attribute);
+            printTree(depth + 1, child);
+        }
+    }
 
 }

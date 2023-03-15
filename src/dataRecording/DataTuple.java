@@ -278,6 +278,7 @@ public class DataTuple {
 			case "inkyDir" -> inkyDir.toString();
 			case "pinkyDir" -> pinkyDir.toString();
 			case "sueDir" -> sueDir.toString();
+			case "pacmanPos" -> discretizePosition(pacmanPosition).toString();
 			default -> null;
 		};
 	}

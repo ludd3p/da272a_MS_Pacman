@@ -29,8 +29,10 @@ public class MyPacMan extends Controller<MOVE>
 		// Start the process of building tree
 		ArrayList<String> attributelist = new ArrayList<>(attributeMap.keySet());
 		root = buildTree(dataSetTraining, attributelist);
+		root.printTree(0, root);
 		validateTree(dataSetTraining, "Training");
 		validateTree(dataSetTest, "Testing");
+
 	}
 
 
@@ -91,7 +93,7 @@ public class MyPacMan extends Controller<MOVE>
 
 
 	/**
-	 * Creates the tree
+	 * Recursively creates the decision tree
 	 * @param dataSetTraining Data set for training
 	 * @param attributeList List of different attributes
 	 * @return The root node
@@ -146,7 +148,7 @@ public class MyPacMan extends Controller<MOVE>
 
 
 	/**
-	 * Checks if all entries are the same
+	 * Checks if all entries in a data set are the same
 	 * @param dataSetTraining The data set
 	 * @return True / False
 	 */
@@ -160,13 +162,13 @@ public class MyPacMan extends Controller<MOVE>
 
 	/**
 	 * Checks for the dominant attribute in a  data set
-	 * @param dataSetTraining The data set
+	 * @param dataSet The data set
 	 * @return Most common attribute
 	 */
-	public MOVE majorityClass(ArrayList<DataTuple> dataSetTraining) {
+	public MOVE majorityClass(ArrayList<DataTuple> dataSet) {
 		MOVE move = null;
 		HashMap<MOVE, Integer> moveCounter = new HashMap<>(Map.of(MOVE.UP, 0, MOVE.LEFT, 0, MOVE.RIGHT, 0, MOVE.DOWN, 0, MOVE.NEUTRAL, 0));
-		for (DataTuple dt : dataSetTraining) {
+		for (DataTuple dt : dataSet) {
 			MOVE key = dt.DirectionChosen;
 			moveCounter.put(key, (moveCounter.get(key)+1));
 		}
@@ -179,24 +181,39 @@ public class MyPacMan extends Controller<MOVE>
 		return move;
 	}
 
+	/**
+	 * This method performs attribute selection and returns the selected attribute
+	 * @param dataSetTraining Data set
+	 * @param attributesList List of attributes
+	 * @return
+	 */
 	public String attributeSelection(ArrayList<DataTuple> dataSetTraining, ArrayList<String> attributesList) {
 		String returnAttribute = "";
-		double baseValue = Integer.MAX_VALUE;
+		double baseValue = Double.MAX_VALUE;
+
+		// Calculate the entropy of the original dataset
+		double entropy = calculateEntropy(dataSetTraining);
+		System.out.println(entropy + " Entropy full set");
 
 		// Iterate attributes
 		for (String attribute : attributesList) {
-			double compareValue = 0.0;
+			// Initialize informationGain to the entropy of the dataset
+			double informationGain = entropy;
+
+			// Get the list of possible values for this attribute
 			ArrayList<String> attributeValues = attributeMap.get(attribute);
 
-			//Create HashMap to keep count of
+			// Create HashMap to keep count of the number of occurrences of each attribute value
 			HashMap<String, Integer> valueMap = new HashMap<>();
 
-			// Iterate values
+			// Iterate over the values of this attribute
 			for (String aValue : attributeValues) {
+				// Create a subset of the training data containing only tuples with this attribute value
 				ArrayList<DataTuple> subSet = new ArrayList<>();
+				// Count the number of tuples with this attribute value
 				valueMap.put(aValue, 0);
 
-				//
+				// Add tuples with this attribute value to the subset
 				for (DataTuple dt : dataSetTraining) {
 					if (Objects.equals(dt.getAttributeValue(attribute), aValue)) {
 						valueMap.put(aValue, valueMap.get(aValue) +1 );
@@ -204,37 +221,56 @@ public class MyPacMan extends Controller<MOVE>
 					}
 				}
 
-				// Create sum of each move
-				int up = 0, down = 0, left = 0, right = 0, neutral = 0;
-				for (DataTuple dt : subSet) {
-					switch (dt.DirectionChosen) {
-						case UP -> up++;
-						case DOWN -> down++;
-						case LEFT -> left++;
-						case RIGHT -> right++;
-						case NEUTRAL -> neutral++;
-					}
-				}
-				HashMap<String, Integer> counts = new HashMap<>(Map.of("up", up, "down", down, "left", left, "right", right, "neutral", neutral));
-				for (int i : counts.values()) {
-					if (i == 0) continue; // 0 in log gives NaN
-					compareValue -= i * Math.log(i) / Math.log(2);
-				}
+				// Calculate the entropy of the subset
+				double subSetEntropy = calculateEntropy(subSet);
+
+				// Calculate average of the entropy of each attribute
+				informationGain -= ((double) subSet.size() / dataSetTraining.size()) * subSetEntropy;
+
 			}
-			// Select the best move
-			if (compareValue < baseValue) {
-				baseValue = compareValue;
+			// Select the attribute with the highest information gain
+			if (informationGain < baseValue) {
+				baseValue = informationGain;
 				returnAttribute = attribute;
 			}
 		}
+		// Return the selected attribute
 		return returnAttribute;
 	}
 
-	public static double log2Calculator(double d) {
-		if (d <= 0) return 0;
-		return Math.log(d) / Math.log(2);
+	/**
+	 *Calculates the entropy of the given dataset based on the number of occurrences of each move.
+	 *@param dataSet The dataset to calculate the entropy of
+	 *@return The entropy of the dataset
+	 */
+	public double calculateEntropy(ArrayList<DataTuple> dataSet){
+		// Create sum of each move
+		int up = 0, down = 0, left = 0, right = 0, neutral = 0;
+		for (DataTuple dt : dataSet) {
+			switch (dt.DirectionChosen) {
+				case UP -> up++;
+				case DOWN -> down++;
+				case LEFT -> left++;
+				case RIGHT -> right++;
+				case NEUTRAL -> neutral++;
+			}
+		}
+		// Put values in ArrayList to be iterable
+		ArrayList<Integer> counts = new ArrayList<>(Arrays.asList(up, down, left, right, neutral));
+		double entropy = 0.0;
+		for (int i : counts) {
+			if (i == 0) continue; // 0 in log gives NaN
+			entropy -= i * Math.log(i) / Math.log(2);
+		}
+		return entropy;
 	}
 
+	/**
+	 * Method to validate the decision tree by testing it against a given dataset
+	 * and printing the accuracy of the predictions
+	 * @param dataSet The dataset to test the decision tree on
+	 * @param s String for which data set is being tested ("Training" or "Testing")
+	 */
 	public void validateTree(ArrayList<DataTuple> dataSet, String s){
 		MOVE should, generated;
 		double correct = 0;
