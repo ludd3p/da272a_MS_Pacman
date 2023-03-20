@@ -1,5 +1,7 @@
 package pacman.entries.pacman;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Node {
     private String label;
@@ -37,23 +39,25 @@ public class Node {
         this.label = label;
     }
 
-    public void printTree(int depth, Node node) {
+    public void printTree(int depth) {
         if (isLeaf()) {
-            return;
+            for (int i = 0; i < depth; i++) {
+                System.out.print(" " + (i+1) + " ");
+            }
+            System.out.println("= " + getLabel());
         }
-
-        // Print the label of the current node
-        for (int i = 0; i < depth; i++) {
-            System.out.print(" " + i + " ");
-        }
-        System.out.println(node.getLabel());
-
-        // Recursively print each child of the current node
-        HashMap<String, Node> childrenNodes = node.getChildren();
-        for (String attribute : childrenNodes.keySet()) {
-            Node child = childrenNodes.get(attribute);
-            printTree(depth + 1, child);
+        ArrayList<Map.Entry<String, Node>> nodeList = new ArrayList<>(children.entrySet());
+        for (int i = 0; i < nodeList.size(); i++) {
+            for (int j = 0; j < depth; j++) {
+                System.out.print(" " + (j+1) + " ");
+            }
+            if (i == nodeList.size() - 1) {
+                System.out.println(label + " = " + nodeList.get(i).getKey());
+                nodeList.get(i).getValue().printTree(depth + 1);
+            } else {
+                System.out.println(label + " = " + nodeList.get(i).getKey());
+                nodeList.get(i).getValue().printTree(depth + 1);
+            }
         }
     }
-
 }

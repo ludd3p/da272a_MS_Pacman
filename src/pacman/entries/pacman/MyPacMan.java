@@ -29,7 +29,7 @@ public class MyPacMan extends Controller<MOVE>
 		// Start the process of building tree
 		ArrayList<String> attributelist = new ArrayList<>(attributeMap.keySet());
 		root = buildTree(dataSetTraining, attributelist);
-		root.printTree(0, root);
+		root.printTree(0);
 		validateTree(dataSetTraining, "Training");
 		validateTree(dataSetTest, "Testing");
 
@@ -80,6 +80,7 @@ public class MyPacMan extends Controller<MOVE>
 		attributeMap.put("sueDir", direction);
 
 
+		/*
 		ArrayList<String> pills = new ArrayList<>();
 		pills.add("VERY_HIGH");
 		pills.add("HIGH");
@@ -88,7 +89,9 @@ public class MyPacMan extends Controller<MOVE>
 		pills.add("VERY_LOW");
 		pills.add("NONE");
 		attributeMap.put("numOfPillsLeft", pills);
+		*/
 
+		 /*
 		ArrayList<String> powerPills = new ArrayList<>();
 		powerPills.add("VERY_HIGH");
 		powerPills.add("HIGH");
@@ -106,7 +109,7 @@ public class MyPacMan extends Controller<MOVE>
 		currentScore.add("VERY_LOW");
 		attributeMap.put("currentScore", currentScore);
 
-
+		/*
 		ArrayList<String> pacmanPosition = new ArrayList<>();
 		pacmanPosition.add("VERY_HIGH");
 		pacmanPosition.add("HIGH");
@@ -114,8 +117,10 @@ public class MyPacMan extends Controller<MOVE>
 		pacmanPosition.add("LOW");
 		pacmanPosition.add("VERY_LOW");
 		attributeMap.put("pacmanPosition", pacmanPosition);
+		*/
 
 
+		/*
 		ArrayList<String> gameTime = new ArrayList<>();
 		gameTime.add("VERY_HIGH");
 		gameTime.add("HIGH");
@@ -123,8 +128,9 @@ public class MyPacMan extends Controller<MOVE>
 		gameTime.add("LOW");
 		gameTime.add("VERY_LOW");
 		attributeMap.put("gameTime", gameTime);
+		*/
 
-
+		/*
 		ArrayList<String> totalNumberOfPills = new ArrayList<>();
 		totalNumberOfPills.add("220");
 		totalNumberOfPills.add("240");
@@ -133,7 +139,7 @@ public class MyPacMan extends Controller<MOVE>
 		ArrayList<String> totalNumberOfPowerPills = new ArrayList<>();
 		totalNumberOfPowerPills.add("4");
 		attributeMap.put("totalNumberOfPowerPills", totalNumberOfPowerPills);
-
+		*/
 	}
 
 	/**
