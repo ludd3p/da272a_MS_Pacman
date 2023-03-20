@@ -7,21 +7,15 @@
     <list default="true" id="ff14300c-0a07-4225-b49f-beb3d2287c10" name="Changes" comment="Woo">
       <change afterPath="$PROJECT_DIR$/.idea/discord.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-<<<<<<< Updated upstream
-      <change beforePath="$PROJECT_DIR$/src/pacman/entries/pacman/MyPacMan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pacman/entries/pacman/MyPacMan.java" afterDir="false" />
-=======
       <change beforePath="$PROJECT_DIR$/myData/trainingData.txt" beforeDir="false" afterPath="$PROJECT_DIR$/myData/trainingData.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/da272a_MS_Pacman/dataRecording/DataTuple.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/da272a_MS_Pacman/dataRecording/DataTuple.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/da272a_MS_Pacman/pacman/entries/pacman/MyPacMan$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/da272a_MS_Pacman/pacman/entries/pacman/MyPacMan$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/da272a_MS_Pacman/pacman/entries/pacman/MyPacMan.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/da272a_MS_Pacman/pacman/entries/pacman/MyPacMan.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dataRecording/DataTuple.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataRecording/DataTuple.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pacman/Executor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pacman/Executor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pacman/entries/pacman/MyPacMan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pacman/entries/pacman/MyPacMan.java" afterDir="false" />
     </list>
-    <list id="8a5e8176-7749-4f9d-839f-f48f3082b324" name="Changes by Ludvi" comment="">
-      <change beforePath="$PROJECT_DIR$/myData/trainingData.txt" beforeDir="false" afterPath="$PROJECT_DIR$/myData/trainingData.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pacman/entries/pacman/MyPacMan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pacman/entries/pacman/MyPacMan.java" afterDir="false" />
->>>>>>> Stashed changes
-    </list>
+    <list id="8a5e8176-7749-4f9d-839f-f48f3082b324" name="Changes by Ludvi" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -37,47 +31,6 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/src/pacman/entries/pacman/MyPacMan.java">
-      <ranges>
-        <range start1="36" end1="36" start2="36" end2="40" changelist="ff14300c-0a07-4225-b49f-beb3d2287c10" />
-        <range start1="43" end1="43" start2="47" end2="48" changelist="ff14300c-0a07-4225-b49f-beb3d2287c10" />
-        <range start1="46" end1="50" start2="51" end2="57" changelist="ff14300c-0a07-4225-b49f-beb3d2287c10" />
-        <range start1="51" end1="51" start2="58" end2="61" changelist="ff14300c-0a07-4225-b49f-beb3d2287c10" />
-        <range start1="53" end1="56" start2="63" end2="63" changelist="ff14300c-0a07-4225-b49f-beb3d2287c10" />
-        <range start1="61" end1="61" start2="68" end2="70" changelist="ff14300c-0a07-4225-b49f-beb3d2287c10" />
-        <range start1="71" end1="71" start2="80" end2="136" changelist="ff14300c-0a07-4225-b49f-beb3d2287c10" />
-        <range start1="83" end1="85" start2="148" end2="148" changelist="ff14300c-0a07-4225-b49f-beb3d2287c10" />
-        <range start1="92" end1="94" start2="155" end2="155" changelist="ff14300c-0a07-4225-b49f-beb3d2287c10" />
-        <range start1="122" end1="123" start2="183" end2="183" changelist="ff14300c-0a07-4225-b49f-beb3d2287c10" />
-        <range start1="129" end1="129" start2="189" end2="191" changelist="ff14300c-0a07-4225-b49f-beb3d2287c10" />
-        <range start1="140" end1="141" start2="202" end2="202" changelist="8a5e8176-7749-4f9d-839f-f48f3082b324" />
-        <range start1="185" end1="186" start2="246" end2="247" changelist="ff14300c-0a07-4225-b49f-beb3d2287c10" />
-        <range start1="189" end1="190" start2="250" end2="251" changelist="ff14300c-0a07-4225-b49f-beb3d2287c10" />
-        <range start1="191" end1="192" start2="252" end2="254" changelist="ff14300c-0a07-4225-b49f-beb3d2287c10" />
-        <range start1="195" end1="196" start2="257" end2="258" changelist="ff14300c-0a07-4225-b49f-beb3d2287c10" />
-        <range start1="200" end1="201" start2="262" end2="263" changelist="ff14300c-0a07-4225-b49f-beb3d2287c10" />
-        <range start1="209" end1="210" start2="271" end2="272" changelist="ff14300c-0a07-4225-b49f-beb3d2287c10" />
-        <range start1="213" end1="215" start2="275" end2="276" changelist="ff14300c-0a07-4225-b49f-beb3d2287c10" />
-        <range start1="216" end1="219" start2="277" end2="280" changelist="ff14300c-0a07-4225-b49f-beb3d2287c10" />
-        <range start1="222" end1="224" start2="283" end2="284" changelist="ff14300c-0a07-4225-b49f-beb3d2287c10" />
-        <range start1="225" end1="229" start2="285" end2="287" changelist="ff14300c-0a07-4225-b49f-beb3d2287c10" />
-        <range start1="230" end1="233" start2="288" end2="298" changelist="ff14300c-0a07-4225-b49f-beb3d2287c10" />
-        <range start1="247" end1="248" start2="312" end2="313" changelist="8a5e8176-7749-4f9d-839f-f48f3082b324" />
-        <range start1="258" end1="259" start2="323" end2="325" changelist="8a5e8176-7749-4f9d-839f-f48f3082b324" />
-        <range start1="260" end1="261" start2="326" end2="329" changelist="8a5e8176-7749-4f9d-839f-f48f3082b324" />
-        <range start1="262" end1="263" start2="330" end2="332" changelist="8a5e8176-7749-4f9d-839f-f48f3082b324" />
-        <range start1="296" end1="296" start2="365" end2="366" changelist="ff14300c-0a07-4225-b49f-beb3d2287c10" />
-        <range start1="302" end1="302" start2="372" end2="373" changelist="8a5e8176-7749-4f9d-839f-f48f3082b324" />
-      </ranges>
-    </file>
-    <file path="$PROJECT_DIR$/myData/trainingData.txt">
-      <ranges>
-        <range start1="0" end1="6304" start2="0" end2="0" changelist="8a5e8176-7749-4f9d-839f-f48f3082b324" />
-        <range start1="6387" end1="6388" start2="83" end2="2862" changelist="ff14300c-0a07-4225-b49f-beb3d2287c10" />
-      </ranges>
-    </file>
-  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -87,31 +40,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-<<<<<<< Updated upstream
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-=======
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Repositories/newpac/da272a_MS_Pacman&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
->>>>>>> Stashed changes
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "last_opened_file_path": "D:/Repositories/newpac/da272a_MS_Pacman",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "editor.preferences.fonts.default",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RunManager" selected="Application.MyPacMan">
+}]]></component>
+  <component name="RunManager" selected="Application.Executor">
     <configuration name="DataTester" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="pacman.DataTester" />
       <module name="da272a_MS_Pacman" />
@@ -153,9 +99,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Executor" />
         <item itemvalue="Application.MyPacMan" />
         <item itemvalue="Application.DataTester" />
-        <item itemvalue="Application.Executor" />
       </list>
     </recent_temporary>
   </component>
@@ -167,17 +113,14 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1674048129552</updated>
-<<<<<<< Updated upstream
       <workItem from="1678451087389" duration="7241000" />
       <workItem from="1678630983916" duration="37000" />
       <workItem from="1678799220287" duration="1959000" />
-=======
       <workItem from="1678882507553" duration="11818000" />
       <workItem from="1679142159921" duration="21447000" />
       <workItem from="1679238806563" duration="17000" />
       <workItem from="1679310088200" duration="6578000" />
       <workItem from="1679322024297" duration="483000" />
->>>>>>> Stashed changes
     </task>
     <task id="LOCAL−00001" summary="Woo">
       <created>1674048156878</created>

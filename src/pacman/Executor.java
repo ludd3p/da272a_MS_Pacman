@@ -24,6 +24,7 @@ import pacman.controllers.examples.RandomNonRevPacMan;
 import pacman.controllers.examples.RandomPacMan;
 import pacman.controllers.examples.StarterGhosts;
 import pacman.controllers.examples.StarterPacMan;
+import pacman.entries.pacman.MyPacMan;
 import pacman.game.Game;
 import pacman.game.GameView;
 
@@ -45,7 +46,7 @@ public class Executor
 	 */
 	public static void main(String[] args)
 	{
-		Executor exec=new Executor();
+		Executor exec= new Executor();
 
 		
 		//run multiple games in batch mode - good for testing.
@@ -85,7 +86,10 @@ public class Executor
 		 */
 		
 		//run game for data collection
-		exec.runGameTimed(new DataCollectorController(new KeyBoardInput()),new StarterGhosts(),visual);
+		// exec.runGameTimed(new DataCollectorController(new KeyBoardInput()),new StarterGhosts(),visual);
+
+		// Run our trash bot
+		exec.runGameTimed(new MyPacMan(),new StarterGhosts(),visual);
 	}
 	
     /**
@@ -129,7 +133,7 @@ public class Executor
 	 *
 	 * @param pacManController The Pac-Man controller
 	 * @param ghostController The Ghosts controller
-	 * @param visual Indicates whether or not to use visuals
+	 * @param visual Indicates whether to use visuals
 	 * @param delay The delay between time-steps
 	 */
 	public void runGame(Controller<MOVE> pacManController,Controller<EnumMap<GHOST,MOVE>> ghostController,boolean visual,int delay)

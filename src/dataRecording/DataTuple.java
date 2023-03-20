@@ -264,8 +264,6 @@ public class DataTuple {
 		return DiscreteTag.DiscretizeDouble(aux);
 	}
 
-<<<<<<< Updated upstream
-=======
 	public String getAttributeValue(String attribute) {
 		return switch (attribute) {
 			case "isBlinkyEdible" -> Boolean.toString(isBlinkyEdible);
@@ -290,6 +288,4 @@ public class DataTuple {
 			default -> null;
 		};
 	}
-
->>>>>>> Stashed changes
 }
