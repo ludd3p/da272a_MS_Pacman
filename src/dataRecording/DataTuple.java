@@ -264,4 +264,32 @@ public class DataTuple {
 		return DiscreteTag.DiscretizeDouble(aux);
 	}
 
+<<<<<<< Updated upstream
+=======
+	public String getAttributeValue(String attribute) {
+		return switch (attribute) {
+			case "isBlinkyEdible" -> Boolean.toString(isBlinkyEdible);
+			case "isInkyEdible" -> Boolean.toString(isInkyEdible);
+			case "isPinkyEdible" -> Boolean.toString(isPinkyEdible);
+			case "isSueEdible" -> Boolean.toString(isSueEdible);
+			case "blinkyDist" -> discretizeDistance(blinkyDist).toString();
+			case "inkyDist" -> discretizeDistance(inkyDist).toString();
+			case "pinkyDist" -> discretizeDistance(pinkyDist).toString();
+			case "sueDist" -> discretizeDistance(sueDist).toString();
+			case "blinkyDir" -> blinkyDir.toString();
+			case "inkyDir" -> inkyDir.toString();
+			case "pinkyDir" -> pinkyDir.toString();
+			case "sueDir" -> sueDir.toString();
+			case "pacmanPosition" -> discretizePosition(pacmanPosition).toString();
+			case "numOfPillsLeft" -> discretizeNumberOfPills(numOfPillsLeft).toString();
+			case "numOfPowerPillsLeft" -> discretizeNumberOfPowerPills(numOfPowerPillsLeft).toString();
+			case "currentScore" -> discretizeCurrentScore(currentScore).toString();
+			case "gameTime" -> discretizeTotalGameTime(totalGameTime).toString();
+			case "totalNumberOfPills" -> Integer.toString(numberOfTotalPillsInLevel);
+			case "totalNumberOfPowerPills" -> Integer.toString(numberOfTotalPowerPillsInLevel);
+			default -> null;
+		};
+	}
+
+>>>>>>> Stashed changes
 }
